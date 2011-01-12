@@ -1,4 +1,4 @@
-class TableControler
+class TableController
   
   constructor: (tabTitle, winTitle, icon) ->
     @win = Ti.UI.createWindow {
@@ -143,4 +143,4 @@ class TableControler
     html += "</body></html>"
     return Ti.UI.createWebView {html: html}
     
-@TableControler = TableControler
+@TableController = TableController

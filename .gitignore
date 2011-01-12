@@ -2,3 +2,4 @@ syntax:glob
 build
 tmp
 Resources/*.js
+.idea

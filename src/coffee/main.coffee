@@ -1,6 +1,6 @@
 Ti.include "client.js"
 Ti.include "views.js"
-Ti.include "tablecontroler.js"
+Ti.include "tablecontroller.js"
 
 # Remove in production code
 #Ti.include "testclient.js"
@@ -9,17 +9,17 @@ Ti.include "tablecontroler.js"
 Ti.UI.setBackgroundColor '#000'
 
 # Create Browse view / tab
-class BrowseControler extends TableControler  
+class BrowseController extends TableController
   constructor: () ->
     super("Browse", "Root", "images/cabinet.png")
     
   getRootObject: () ->
     return @client.getInfo()
     
-browseControler = new BrowseControler()
+browseController = new BrowseController()
 
 # Create updates view / tab
-class UpdatesControler extends TableControler  
+class UpdatesController extends TableController
   constructor: () ->
     super("Updates", "Recently Modified", "images/updates.png")
     @group_by = "modified"
@@ -30,11 +30,11 @@ class UpdatesControler extends TableControler
     object.isfolder = true
     return object
 
-updatesControler = new UpdatesControler()
+updatesController = new UpdatesController()
 
 # Create History view / tab
 
-class HistoryControler extends TableControler  
+class HistoryController extends TableController
   constructor: () ->
     super("History", "Recently Viewed", "images/clock.png")
     @group_by = "visited"
@@ -45,7 +45,7 @@ class HistoryControler extends TableControler
     object.isfolder = true
     return object
 
-historyControler = new HistoryControler()
+historyController = new HistoryController()
 
 # Search
 
@@ -74,9 +74,9 @@ Ti.include "settings.js"
 
 # Create tab group
 tabGroup = Ti.UI.createTabGroup()
-tabGroup.addTab(browseControler.tab)
-tabGroup.addTab(updatesControler.tab)
-tabGroup.addTab(historyControler.tab)
+tabGroup.addTab(browseController.tab)
+tabGroup.addTab(updatesController.tab)
+tabGroup.addTab(historyController.tab)
 #tabGroup.addTab(searchTab)
 tabGroup.addTab(settingsTab)
 
