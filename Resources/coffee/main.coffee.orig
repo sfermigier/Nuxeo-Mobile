@@ -1,0 +1,126 @@
+# Remove in production code
+Ti.include "js/testclient.js"
+
+Ti.include "js/client.js"
+Ti.include "js/views.js"
+
+client = root.getClient()
+
+# this sets the background color of the master UIView (when there are no windows/tab groups on it)
+Ti.UI.setBackgroundColor '#000'
+
+# Create Browse view / tab
+browseWin = Ti.UI.createWindow {
+    title: 'Root of Repository',
+    backgroundColor: '#fff',
+}
+browseTab = Ti.UI.createTab {
+    icon: 'images/cabinet.png',
+    title:'Browse',
+    window: browseWin,
+}
+
+win = browseWin
+
+refresh = () ->
+  Ti.API.log("Refresh called")
+  getRootObject = () ->
+    return client.getInfo()
+  if !win.connected && client.isConnected()
+    view = makeTableView(null, getRootObject)
+    win.connected = true
+    win.add(view)
+
+win.addEventListener("focus", refresh)
+
+# Create updates view / tab
+updatesWin = Ti.UI.createWindow {
+  title: 'Recent Updates',
+  backgroundColor: '#fff',
+}
+updatesTab = Ti.UI.createTab {
+  icon: 'images/updates.png',
+  title: 'Updates',
+  window: updatesWin
+}
+
+win = updatesWin
+
+refresh = () ->
+  Ti.API.log("Refresh called")
+  getRootObject = () ->
+    object = {}
+    object.children = client.getUpdates()
+    object.isfolder = true
+    return object
+
+  if !win.connected && client.isConnected()
+    view = makeTableView(null, getRootObject)
+    win.connected = true
+    win.add(view)
+
+win.addEventListener("focus", refresh, "modified")
+
+# Create History view / tab
+
+historyWin = Ti.UI.createWindow {
+    title: 'Browsing History',
+    backgroundColor: '#fff',
+}
+historyTab = Ti.UI.createTab {
+    icon: 'images/clock.png',
+    title: 'History',
+    window: historyWin
+}
+
+win = historyWin
+
+refresh () ->
+  getRootObject = () ->
+    object = {}
+    object.children = client.getHistory()
+    object.isfolder = true
+    return object
+  win.add(makeTableView(null, getRootObject, "visited"))
+
+win.addEventListener("focus", win.refresh);
+
+# Search
+
+searchWin = Ti.UI.createWindow {
+    title: 'Search',
+    backgroundColor: '#fff',
+}
+searchTab = Ti.UI.createTab {
+    icon: 'images/magnify.png',
+    title: 'Search',
+    window: searchWin
+}
+
+# Settings
+settingsWin = Ti.UI.createWindow {
+    title: 'Settings',
+    backgroundColor: '#fff',
+}
+settingsTab = Ti.UI.createTab {
+    icon: 'images/settings.png',
+    title: 'Settings',
+    window: settingsWin
+}
+
+# create tab group
+tabGroup = Ti.UI.createTabGroup()
+tabGroup.addTab(browseTab)
+tabGroup.addTab(updatesTab)
+tabGroup.addTab(historyTab)
+tabGroup.addTab(searchTab)
+tabGroup.addTab(settingsTab)
+tabGroup.open(0)
+
+###
+if (client.isConnected()) {
+    tabGroup.open(0);
+} else {
+    tabGroup.open(4);
+}
+###
