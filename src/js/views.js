@@ -102,7 +102,7 @@ function getIconPath(entry) {
 function makeRow(entry) {
     var row = Ti.UI.createTableViewRow({
         _title: entry.title,
-        oid: entry.oid,
+        oid: entry.oid
     });
 
     if (entry.isfolder) {

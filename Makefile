@@ -1,11 +1,16 @@
+# Edit this to fit your own profiles and ids.
 	SDK_VERSION=1.5.1
+	IOS_VERSION=4.2
+	#UUID=B8687100-9AEB-4EF1-9059-60F946F2F14C
+	UUID=D3023DD0-FB15-46A4-89B8-E2ECC08C919B
+	DEV_ID=Stefane Fermigier (N6XFBZ44WD)
+	APP_ID=com.nuxeo.mobile
+	APP_NAME=Nuxeo Mobile
+	DIST_CERT=Nuxeo
+
+# Don't touch
 	SDK_HOME=$(HOME)/Library/Application Support/Titanium/mobilesdk/osx/$(SDK_VERSION)
 	IOS_BUILDER=$(SDK_HOME)/iphone/builder.py
-	IOS_VERSION=4.2
-	UUID=FE6D0AF3-EF8C-4DA7-B32E-1144A1416098
-	DEV_ID=Stefane Fermigier (N6XFBZ44WD)
-	APP_ID=com.nuxeo.inuxeo
-	APP_NAME=iNuxeo
 
 	ANDROID_BUILDER=$(SDK_HOME)/android/builder.py
 	ANDROID_HOME=$(HOME)/apps/android-sdk-mac_x86
@@ -19,7 +24,7 @@ compile:
 	mv src/coffee/*.js Resources/
 	cp src/lib/*.js Resources/
 	cp src/js/*.js Resources/
-	#cp Resources/iphone/* build/iphone/Resources/
+	#install Resources/iphone/* build/iphone/Resources/
 
 test-ios: compile
 	python "$(IOS_BUILDER)" run . $(IOS_VERSION)
@@ -38,7 +43,7 @@ install-ios:
 
 distribute-ios:
 	python "$(IOS_BUILDER)" distribute $(IOS_VERSION) "$(HERE)" \
-		$(APP_ID) $(APP_NAME) $(UUID) null "$(HERE)" iphone
+		$(APP_ID) "$(APP_NAME)" $(UUID) "$(DIST_CERT)" "$(HERE)" iphone
 
 clean:
 	rm -rf build

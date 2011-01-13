@@ -1,3 +1,9 @@
+###
+Main program for the applications.
+
+Defines the controllers, and sets up the tab group.
+###
+
 Ti.include "client.js"
 Ti.include "views.js"
 Ti.include "tablecontroller.js"

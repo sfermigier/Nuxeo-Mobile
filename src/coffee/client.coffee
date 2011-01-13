@@ -8,7 +8,7 @@ Is also manages the history.
 DEFAULT_URL = "http://10.213.3.8:9998/m"
 DEBUG = false
 
-HISTORY_SIZE = 10
+HISTORY_SIZE = 20
 
 Ti.include "util.js"
 
