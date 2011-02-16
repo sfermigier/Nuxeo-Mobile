@@ -11,6 +11,7 @@ DEBUG = false
 HISTORY_SIZE = 20
 
 Ti.include "util.js"
+log = Ti.API.log
 
 class Client
 
@@ -82,12 +83,12 @@ class Client
     @lastHttpStatus = htcon.status
     if htcon.status != 200
         return null
-    Ti.API.log(htcon.responseText)
+    log(htcon.responseText)
     return JSON.parse(htcon.responseText)
 
   testConnection: (url, username, password) ->
     xhr = @httpGet(url, username, password)
-    Ti.API.log("Status" + xhr.status)
+    log("Status" + xhr.status)
     return xhr.status == 200
 
   httpGet: (url, username=null, password=null) ->
@@ -96,7 +97,7 @@ class Client
     if password == null
         password = @password
         
-    Ti.API.log("GET: " + url + " " + username + " " + password)
+    log("GET: " + url + " " + username + " " + password)
 
     xhr = Ti.Network.createHTTPClient();
     xhr.open('GET', url, false);
@@ -105,7 +106,7 @@ class Client
         xhr.setRequestHeader('Authorization',
                 'Basic ' + Ti.Utils.base64encode(username + ':' + password));
     xhr.send(null);
-    Ti.API.log("Status" + xhr.status)
+    log("Status" + xhr.status)
     return xhr;
 
   #createWebView: (oid) ->
@@ -127,7 +128,7 @@ getClient = () ->
     url = DEFAULT_URL
   username = props.getString("username")
   password = props.getString("password")
-  Ti.API.log(url + " " + username + " " + password)
+  log(url + " " + username + " " + password)
   _client = new Client(url, username, password)
   return _client
 

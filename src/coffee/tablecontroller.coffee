@@ -95,7 +95,7 @@ class TableController
     rowdata = e.rowData
     oid = rowdata.oid
 
-    button = Titanium.UI.createButton { title: '?' }
+    button = Titanium.UI.createButton { title: 'Metadata' }
     button.addEventListener("click", (e) => @flipView(e))
 
     win = Ti.UI.createWindow {
@@ -120,13 +120,15 @@ class TableController
         transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT,
       }
       win.metadata_view = view
+      button.title = "Back"
     else
       win.animate {
         view: win.main_view,
         transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT,
       }
       win.metadata_view = null
-  
+      button.title = "Metadata"
+
   makeMetadataView: (info) ->
     html = "<html><body style='font-family:Helvetica,sans-serif;'>"
     html += "<h1>Metadata</h1>\n"
